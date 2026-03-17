@@ -21,6 +21,6 @@ app.get(/.*/, (req, res) => {
     res.json({id: ID})
 })
 
-app.listen(PORT, () => {
-    console.log(`Backend started on ${PORT}. ctrl+c to exit`)
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`Backend started on ${PORT}. ctrl+c to exit`)
 })
