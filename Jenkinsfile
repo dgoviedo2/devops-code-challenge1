@@ -2,12 +2,17 @@ pipeline {
     agent any
 
     environment {
-        // ====> Replace with your AWS region, e.g., 'us-east-1'
-        AWS_REGION = 'your-aws-region'
+        // AWS region
+        AWS_REGION = 'us-east-2'
 
-        // ====> Replace with your own ECR repository URIs
-        FRONTEND_REPO = 'your-frontend-ecr-repo-uri'
-        BACKEND_REPO  = 'your-backend-ecr-repo-uri'
+        // Your ECR repository URIs
+        FRONTEND_REPO = '776060340745.dkr.ecr.us-east-2.amazonaws.com/devops-challenge-frontend'
+        BACKEND_REPO = '776060340745.dkr.ecr.us-east-2.amazonaws.com/devops-challenge-backend'
+        
+        // Your ECS cluster and service names
+        CLUSTER_NAME = 'devops-challenge-cluster'
+        FRONTEND_SERVICE = 'devops-challenge-frontend-service'
+        BACKEND_SERVICE = 'devops-challenge-backend-service'
     }
 
     stages {
@@ -28,7 +33,7 @@ pipeline {
 
         stage('Authenticate to ECR') {
             steps {
-                withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'your-aws-credentials-id']]) {
+                withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-credentials']]) {
                     script {
                         sh '''
                             aws --version
@@ -56,11 +61,11 @@ pipeline {
 
         stage('Update ECS services') {
             steps {
-                withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'your-aws-credentials-id']]) {
+                withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-credentials']]) {
                     script {
                         sh '''
-                            aws ecs update-service --cluster your-ecs-cluster-name --service your-frontend-service-name --force-new-deployment --region $AWS_REGION
-                            aws ecs update-service --cluster your-ecs-cluster-name --service your-backend-service-name --force-new-deployment --region $AWS_REGION
+                            aws ecs update-service --cluster $CLUSTER_NAME --service $FRONTEND_SERVICE --force-new-deployment --region $AWS_REGION
+                            aws ecs update-service --cluster $CLUSTER_NAME --service $BACKEND_SERVICE --force-new-deployment --region $AWS_REGION
                         '''
                     }
                 }
