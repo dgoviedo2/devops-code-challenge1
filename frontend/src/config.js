@@ -1,4 +1,4 @@
 const config = {
-  backendUrl: "http://<ALB-DNS>/api"
+  backendUrl: process.env.REACT_APP_BACKEND_URL + "/api"
 };
 export default config;

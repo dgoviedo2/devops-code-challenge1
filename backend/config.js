@@ -1,3 +1,3 @@
 module.exports = {
-CORS_ORIGIN: 'http://<ALB-DNS>'
+  CORS_ORIGIN: process.env.CORS_ORIGIN
 };
