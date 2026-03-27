@@ -1,6 +1,7 @@
 const express = require('express')
 const { v4: uuidv4 } = require('uuid');
 const { CORS_ORIGIN } = require('./config')
+
 console.log(require('./config'))
 console.log(CORS_ORIGIN)
 
@@ -16,11 +17,18 @@ app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Headers', '*')
     next();
 })
+
+// Health check endpoint - MUST come before the wildcard route
+app.get('/health', (req, res) => {
+    res.status(200).json({ status: 'ok' });
+});
+
+// Wildcard route - catches everything else
 app.get(/.*/, (req, res) => {
     console.log(`${new Date().toISOString()} GET`)
     res.json({id: ID})
 })
 
 app.listen(PORT, "0.0.0.0", () => {
-  console.log(`Backend started on ${PORT}. ctrl+c to exit`)
+    console.log(`Backend started on ${PORT}. ctrl+c to exit`)
 })

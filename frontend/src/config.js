@@ -1,4 +1,4 @@
 const config = {
-  backendUrl: process.env.REACT_APP_BACKEND_URL + "/api"
+  backendUrl: "http://devops-challenge-alb-1472515734.us-east-2.elb.amazonaws.com/api"
 };
 export default config;

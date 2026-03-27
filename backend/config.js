@@ -1,3 +1,3 @@
 module.exports = {
-  CORS_ORIGIN: process.env.CORS_ORIGIN
+  CORS_ORIGIN: 'http://devops-challenge-alb-1472515734.us-east-2.elb.amazonaws.com'
 };
